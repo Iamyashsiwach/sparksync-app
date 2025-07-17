@@ -8,7 +8,6 @@ import "./globals.css";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { Analytics } from "@vercel/analytics/next";
-import Providers from "./providers";
 
 // Configure Poppins font for headings with specific weights
 const poppins = Poppins({
@@ -78,12 +77,10 @@ export default function RootLayout({
         />
       </head>
       <body className={`${poppins.variable} ${openSans.variable} font-open-sans antialiased`}>
-        <Providers>
-          <Navbar />
-          <main className="min-h-screen">{children}</main>
-          <Footer />
-          <Analytics />
-        </Providers>
+        <Navbar />
+        <main className="min-h-screen">{children}</main>
+        <Footer />
+        <Analytics />
       </body>
     </html>
   );

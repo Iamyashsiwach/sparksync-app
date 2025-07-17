@@ -1,47 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast, Toaster } from "sonner";
 
 export default function ContactPage() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { register, handleSubmit, reset, formState: { errors } } = useForm();
-
-  const onSubmit = async (data: any) => {
-    try {
-      setIsSubmitting(true);
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to send message');
-      }
-
-      toast.success('Message sent successfully!');
-      reset(); // Reset form after successful submission
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to send message');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <>
-      <Toaster position="top-center" />
       {/* Hero Section */}
       <section className="py-12 md:py-24 bg-white text-navy relative overflow-hidden">
         <div className="absolute top-0 left-0 w-full h-2 bg-teal"></div>
@@ -79,7 +43,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* Contact Information & Form */}
+      {/* Contact Information */}
       <section className="py-12 md:py-24 bg-blue-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
@@ -183,110 +147,12 @@ export default function ContactPage() {
               <Card className="shadow-xl border-t-4 border-teal overflow-hidden">
                 <CardContent className="p-5 md:p-8">
                   <h2 className="text-xl md:text-2xl font-poppins font-bold text-navy mb-4 md:mb-6">
-                    Send Us a Message
+                    Or, Send Us a Message
                   </h2>
-                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                      <div className="space-y-1 md:space-y-2">
-                        <label htmlFor="name" className="text-sm font-medium text-gray-700">
-                          Name *
-                        </label>
-                        <Input
-                          id="name"
-                          placeholder="Your name"
-                          className="border-gray-300 focus:border-teal focus:ring focus:ring-teal/20 text-sm md:text-base"
-                          {...register('name', { required: 'Name is required' })}
-                        />
-                        {errors.name && (
-                          <p className="text-red-500 text-sm">{errors.name.message as string}</p>
-                        )}
-                      </div>
-                      <div className="space-y-1 md:space-y-2">
-                        <label htmlFor="email" className="text-sm font-medium text-gray-700">
-                          Email *
-                        </label>
-                        <Input
-                          id="email"
-                          type="email"
-                          placeholder="Your email"
-                          className="border-gray-300 focus:border-teal focus:ring focus:ring-teal/20 text-sm md:text-base"
-                          {...register('email', {
-                            required: 'Email is required',
-                            pattern: {
-                              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                              message: 'Invalid email address',
-                            },
-                          })}
-                        />
-                        {errors.email && (
-                          <p className="text-red-500 text-sm">{errors.email.message as string}</p>
-                        )}
-                      </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                      <div className="space-y-1 md:space-y-2">
-                        <label htmlFor="phone" className="text-sm font-medium text-gray-700">
-                          Phone
-                        </label>
-                        <Input
-                          id="phone"
-                          placeholder="Your phone number"
-                          className="border-gray-300 focus:border-teal focus:ring focus:ring-teal/20 text-sm md:text-base"
-                          {...register('phone')}
-                        />
-                      </div>
-                      <div className="space-y-1 md:space-y-2">
-                        <label htmlFor="company" className="text-sm font-medium text-gray-700">
-                          Company
-                        </label>
-                        <Input
-                          id="company"
-                          placeholder="Your company"
-                          className="border-gray-300 focus:border-teal focus:ring focus:ring-teal/20 text-sm md:text-base"
-                          {...register('company')}
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className="space-y-1 md:space-y-2">
-                      <label htmlFor="subject" className="text-sm font-medium text-gray-700">
-                        Subject *
-                      </label>
-                      <Input
-                        id="subject"
-                        placeholder="Subject of your message"
-                        className="border-gray-300 focus:border-teal focus:ring focus:ring-teal/20 text-sm md:text-base"
-                        {...register('subject', { required: 'Subject is required' })}
-                      />
-                      {errors.subject && (
-                        <p className="text-red-500 text-sm">{errors.subject.message as string}</p>
-                      )}
-                    </div>
-                    
-                    <div className="space-y-1 md:space-y-2">
-                      <label htmlFor="message" className="text-sm font-medium text-gray-700">
-                        Message *
-                      </label>
-                      <Textarea
-                        id="message"
-                        placeholder="Your message"
-                        className="border-gray-300 focus:border-teal focus:ring focus:ring-teal/20 min-h-24 md:min-h-32 text-sm md:text-base"
-                        {...register('message', { required: 'Message is required' })}
-                      />
-                      {errors.message && (
-                        <p className="text-red-500 text-sm">{errors.message.message as string}</p>
-                      )}
-                    </div>
-                    
-                    <Button
-                      type="submit"
-                      className="w-full bg-teal hover:bg-teal/90 active:bg-teal/80 text-black h-10 md:h-12 text-sm md:text-base transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-lg"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? 'Sending...' : 'Send Message'}
-                    </Button>
-                  </form>
+                  <div className="text-gray-700">
+                    <p>You can reach us by email at <a href="mailto:support@sparksync.in" className="text-teal underline">support@sparksync.in</a>.</p>
+                    <p className="mt-4">We look forward to hearing from you!</p>
+                  </div>
                 </CardContent>
               </Card>
             </div>
