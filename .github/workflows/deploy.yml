@@ -24,19 +24,12 @@ jobs:
       - name: Build the static site
         run: npm run build
 
-      - name: Clean Remote Directory via SSH
-        uses: appleboy/ssh-action@master
+      - name: Deploy with rsync
+        uses: burnett01/rsync-deploy@v6.0.0
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: find ${{ secrets.TARGET_DIR }}/ -mindepth 1 -delete
-
-      - name: Deploy to Server via SCP
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "out/*"
-          target: ${{ secrets.TARGET_DIR }} 
+          switches: -avzr --delete
+          path: out/
+          remote_host: ${{ secrets.HOST }}
+          remote_user: ${{ secrets.USER }}
+          remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          remote_path: ${{ secrets.TARGET_DIR }}/ 
