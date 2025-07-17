@@ -1,5 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). It's a starter kit for a full-stack application with a focus on user management, attendance, and task tracking.
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+This project has been configured for automated deployment to GoDaddy using GitHub Actions.
 ## Getting Started
 
 First, run the development server:
