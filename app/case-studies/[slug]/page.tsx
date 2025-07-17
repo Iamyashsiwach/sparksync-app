@@ -38,6 +38,25 @@ export async function generateMetadata({
 }
 
 /**
+ * Generates static paths for each case study slug.
+ * This is required for static site generation (`output: 'export'`).
+ */
+export async function generateStaticParams() {
+  // We need to define the case studies data here or import it
+  // For now, I'll hardcode the slugs based on the existing data in getCaseStudyBySlug
+  const caseStudies = [
+    { slug: "globaltech-manufacturing" },
+    { slug: "secure-financial-cloud" },
+    { slug: "medcare-cybersecurity" },
+  ];
+  
+  return caseStudies.map((caseStudy) => ({
+    slug: caseStudy.slug,
+  }));
+}
+
+
+/**
  * Helper function to retrieve a case study by its slug
  * @param {string} slug - The URL slug of the case study to retrieve
  * @returns {object|undefined} - The case study object if found, or undefined

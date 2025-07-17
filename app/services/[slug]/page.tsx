@@ -33,6 +33,25 @@ export const generateMetadata = ({ params }: { params: any }): Metadata => {
 };
 
 /**
+ * Generates static paths for each service slug.
+ * This is required for static site generation (`output: 'export'`).
+ */
+export async function generateStaticParams() {
+  const services = [
+    { slug: "network-design" },
+    { slug: "cybersecurity" },
+    { slug: "cloud-solutions" },
+    { slug: "managed-services" },
+    { slug: "voip-solutions" },
+    { slug: "passive-services" },
+    { slug: "it-consulting" },
+  ];
+  return services.map((s) => ({
+    slug: s.slug,
+  }));
+}
+
+/**
  * Helper function to retrieve a service by its slug
  * @param {string} slug - The URL slug of the service to retrieve
  * @returns {Object|undefined} - The service object if found, or undefined
