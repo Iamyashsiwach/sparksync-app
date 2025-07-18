@@ -49,7 +49,7 @@ export const jsonLd = {
   ],
   contactPoint: [{
     "@type": "ContactPoint",
-    telephone: "+91 8950803350",
+    telephone: "+91 7056803350",
     contactType: "customer service",
     areaServed: "IN",
     availableLanguage: ["English", "Hindi"]

@@ -79,7 +79,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="text-base md:text-lg font-semibold text-navy mb-1 md:mb-2">Office Address</h3>
                     <p className="text-sm md:text-base text-gray-700">
-                    Cabin No 4, 3rd Floor, Oahfeo Coworking Space,<br />
+                     3rd Floor, Oahfeo Coworking Space,<br />
                     Sector 45 Gurgaon 122003
                     </p>
                   </div>
@@ -93,7 +93,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-base md:text-lg font-semibold text-navy mb-1 md:mb-2">Mobile No</h3>
-                    <p className="text-sm md:text-base text-gray-700 mb-1">+91 8950803350</p>
+                    <p className="text-sm md:text-base text-gray-700 mb-1">+91 7056803350</p>
                   </div>
                 </div>
 

@@ -4,6 +4,7 @@
  * Includes responsive design with mobile menu toggle functionality
  */
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
@@ -25,7 +26,13 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between py-3 md:py-4 px-4 md:px-6">
         {/* Logo and brand name */}
         <Link href="/" className="flex items-center space-x-2">
-          <span className="text-xl md:text-2xl font-bold text-navy">sparksync</span>
+          <Image
+            src="/logo.png"
+            alt="Sparksync Logo"
+            width={100}
+            height={40}
+            className="h-auto"
+          />
         </Link>
         
         {/* Desktop navigation menu - hidden on mobile */}
