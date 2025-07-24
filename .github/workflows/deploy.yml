@@ -41,4 +41,7 @@ jobs:
         run: ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_SSH_PORT }} ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} "mkdir -p ${{ secrets.HOSTINGER_TARGET_DIR }}"
         
       - name: Deploy to sparksync.in
-        run: rsync -avzr --delete --progress -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_SSH_PORT }}" out/ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_TARGET_DIR }}/ 
+        run: rsync -avzr --delete --progress -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_SSH_PORT }}" out/ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_TARGET_DIR }}/
+          
+      - name: Verify deployment - List deployed files
+        run: ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_SSH_PORT }} ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} "echo 'Contents of target directory:' && ls -la ${{ secrets.HOSTINGER_TARGET_DIR }}/ && echo 'Checking for index.html:' && ls -la ${{ secrets.HOSTINGER_TARGET_DIR }}/index.html 2>/dev/null || echo 'index.html not found'" 
