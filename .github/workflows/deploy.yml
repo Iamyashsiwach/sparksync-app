@@ -1,4 +1,4 @@
-name: Deploy to GoDaddy
+name: Deploy to Hostinger
 
 on:
   push:
@@ -8,26 +8,27 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-
+        uses: actions/checkout@v4
+        
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
-
+          cache: 'npm'
+          
       - name: Install dependencies
-        run: npm install
-
+        run: npm ci
+        
       - name: Build the static site
         run: npm run build
-
+        
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: Deploy with rsync
-        run: rsync -avzr --delete --progress -e "ssh -o StrictHostKeyChecking=no" out/ ${{ secrets.USER }}@${{ secrets.HOST }}:${{ secrets.TARGET_DIR }}/ 
+          ssh-private-key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          
+      - name: Deploy to sparksync.in
+        run: rsync -avzr --delete --progress -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_SSH_PORT }}" out/ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_TARGET_DIR }}/ 
