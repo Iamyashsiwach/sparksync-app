@@ -37,11 +37,19 @@ jobs:
         run: ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_SSH_PORT }} ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} "ls -la domains/ 2>/dev/null || echo 'domains directory not found'"
         continue-on-error: true
         
+      - name: Find sparksync.in domain directory
+        run: ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_SSH_PORT }} ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} "echo 'Looking for sparksync domain...' && find . -name '*sparksync*' -type d 2>/dev/null || echo 'No sparksync directories found' && echo 'Checking public_html contents:' && ls -la public_html/ 2>/dev/null || echo 'public_html not accessible'"
+        continue-on-error: true
+        
       - name: Create target directory if needed
         run: ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_SSH_PORT }} ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} "mkdir -p ${{ secrets.HOSTINGER_TARGET_DIR }}"
         
       - name: Deploy to sparksync.in
         run: rsync -avzr --delete --progress -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_SSH_PORT }}" out/ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:${{ secrets.HOSTINGER_TARGET_DIR }}/
           
+      - name: Also deploy to main public_html (in case domain points there)
+        run: rsync -avzr --delete --progress -e "ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_SSH_PORT }}" out/ ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }}:public_html/
+        continue-on-error: true
+        
       - name: Verify deployment - List deployed files
         run: ssh -o StrictHostKeyChecking=no -p ${{ secrets.HOSTINGER_SSH_PORT }} ${{ secrets.HOSTINGER_USER }}@${{ secrets.HOSTINGER_HOST }} "echo 'Contents of target directory:' && ls -la ${{ secrets.HOSTINGER_TARGET_DIR }}/ && echo 'Checking for index.html:' && ls -la ${{ secrets.HOSTINGER_TARGET_DIR }}/index.html 2>/dev/null || echo 'index.html not found'" 
