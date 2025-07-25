@@ -51,7 +51,7 @@ const ServiceCard = ({ icon, title, description, slug, color = "teal" }: Service
           </ul>
         </CardContent>
         <CardFooter className="px-4 sm:px-6 pb-5">
-          <Button asChild className="w-full bg-blue-500 hover:bg-blue-600 text-white text-sm sm:text-base py-2">
+          <Button asChild className="w-full bg-[#5FC8C8] hover:bg-[#4fb3b3] text-white text-sm sm:text-base py-2">
             <Link href={`/services/${slug}`}>Learn More</Link>
           </Button>
         </CardFooter>
