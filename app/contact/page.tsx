@@ -79,8 +79,8 @@ export default function ContactPage() {
                   <div>
                     <h3 className="text-base md:text-lg font-semibold text-navy mb-1 md:mb-2">Office Address</h3>
                     <p className="text-sm md:text-base text-gray-700">
-                     3rd Floor, Oahfeo Coworking Space,<br />
-                    Sector 45 Gurgaon 122003
+                     3rd Floor, Block B, Green Wood Plaza,<br />
+                     Netaji Subhash Marg, Sector 45 Gurugram, 122003
                     </p>
                   </div>
                 </div>
